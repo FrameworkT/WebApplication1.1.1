@@ -43,5 +43,14 @@ namespace WebApplication1._1.Services
         {
             return Products;
         }
+
+        public bool AddData(Product product)
+        {
+            var check = Products.Find(px => px.Id == product.Id);
+            if (check != null) return true;
+
+            Products.Add(product);
+            return false;
+        }
     }
 }

@@ -8,6 +8,7 @@ namespace WebApplication1._1.Services
         void GenData(int number);
         void DeleteData(int id);
         Product SearchProduct(int id);
+        bool AddData(Product product);
 
     }
 }

@@ -8,6 +8,12 @@
 
 <h4>Product</h4>
 <hr />
+@if (TempData["alert"] != null)
+{
+    <div class="alert alert-warning" role="alert">
+        @TempData["alert"]
+    </div>
+}
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Create">

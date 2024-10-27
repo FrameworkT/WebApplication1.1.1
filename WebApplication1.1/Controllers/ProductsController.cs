@@ -33,7 +33,10 @@ namespace WebApplication1._1.Controllers
             if (ModelState.IsValid)
             { 
             //ถูกต้อง
-            return RedirectToAction("Index");
+            var exist = ps.AddData(product);
+                if(!exist)return RedirectToAction("Index"); //ถ้าไม่ซ้ำ
+
+                TempData["alert"] = "คุณตั้งรหัสซ้ำ";
             }
             return View();
         }
