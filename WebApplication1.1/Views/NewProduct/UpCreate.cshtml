@@ -1,30 +1,17 @@
 ﻿@model WebApplication1._1.Models.Product
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "UpCreate";
 }
 
-<h1>Create</h1>
+<h1>UpCreate</h1>
 
 <h4>Product</h4>
 <hr />
-@if (TempData["alert"] != null)
-{
-    <div class="alert alert-warning" role="alert">
-        @TempData["alert"]
-    </div>
-}
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Create">
+        <form asp-action="UpCreate">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Id" class="control-label"></label>
-                <input asp-for="Id" class="form-control" readonly ="@(Model == null?false:true)" />
-                @*for เอาตัวเเปรมาจาก model *@
-                <span asp-validation-for="Id" class="text-danger"></span>
-                @* asp-validation-for ตรวจว่ากรอกหรือยัง *@
-            </div>
             <div class="form-group">
                 <label asp-for="Name" class="control-label"></label>
                 <input asp-for="Name" class="form-control" />
@@ -41,14 +28,12 @@
                 <span asp-validation-for="Amount" class="text-danger"></span>
             </div>
             <div class="form-group">
-                @if (Model == null)
+                @if (Model.Id == 0)
                 {
-                    <input type="submit" value="Create" class="btn btn-primary"/>
+                    <input type="submit" value="Create" class="btn btn-primary" />
                 }
-                else
-                {
-                    <input type="submit" value="Update" class="btn btn-dark"/>
-                }
+                <input type="submit" value="Update" class="btn btn-primary" />
+
             </div>
         </form>
     </div>

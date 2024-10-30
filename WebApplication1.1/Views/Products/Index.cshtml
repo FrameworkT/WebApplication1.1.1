@@ -18,16 +18,21 @@
     <tbody>
         @foreach (var p in Model)
         {
-        <tr>
-            <th scope="row">@p.Id</th>
-            <td>@p.Name</td>
-            <td>@p.Price</td>
-            <td>@p.Amount</td>
-            <td>
-                    <button type="button" class="btn btn-success"><i class="bi bi-pencil-square"></i></button>
-                    <a type="button" class="btn btn-danger" asp-action="Delete" asp-route-id="@p.Id"onclick="return confirm('Delete confirm')"><i class="bi bi-trash"></i></a>
-            </td>
-        </tr>
+            <tr>
+                <th scope="row">@p.Id</th>
+                <td>@p.Name</td>
+                <td>@p.Price</td>
+                <td>@p.Amount</td>
+                <td>
+                    <a type="button" class="btn btn-success" asp-action="Create" asp-route-id="@p.Id">
+                        <i class="bi bi-pencil-square"></i>
+                    </a>
+                    <a type="button" class="btn btn-danger" asp-action="Delete" asp-route-id="@p.Id"
+                       onclick="return confirm('Delete confirm')">
+                        <i class="bi bi-trash-fill"></i>
+                    </a>
+                </td>
+            </tr>
         }
     </tbody>
 </table>
