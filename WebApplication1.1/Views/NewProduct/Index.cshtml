@@ -38,7 +38,7 @@
                     @Html.DisplayFor(modelItem => item.Amount)
                 </td>
                 <td>
-                    <a class="btn btn-warning" asp-action="UpCreate" asp-route-id="@item.Id">Edit</a> |
+                    <a  class="btn btn-warning" asp-action="UpCreate" asp-route-id="@item.Id">Edit</a> |
                     <a class="btn btn-outline-danger" asp-action="Delete" asp-route-id="@item.Id"
                        onclick="return confirm('ยืนยันลบ')">Delete</a>
                 </td>
