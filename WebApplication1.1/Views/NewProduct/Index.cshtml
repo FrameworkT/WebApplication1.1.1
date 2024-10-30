@@ -9,6 +9,16 @@
 <p>
     <a asp-action="UpCreate">Create New</a>
 </p>
+
+<form class="row g-3" asp-action="Index">
+    <div class="col-auto">
+        <input name="keyword" class="form-control" placeholder="Name,Price,Amount">
+    </div>
+    <div class="col-auto">
+        <button type="submit" class="btn btn-primary mb-3">Search</button>
+    </div>
+</form>
+
 <table class="table">
     <thead>
         <tr>

@@ -13,9 +13,18 @@ namespace WebApplication1._1.Services.New
             this.db = db;
         }
 
-        public List<Product> GetAll()
+        public List<Product> GetAll(string keyword)
         {
-            return db.Products.OrderByDescending(px => px.Id).ToList();
+            keyword = keyword?.ToUpper();
+
+            var products = db.Products.OrderByDescending(px => px.Id).ToList();
+
+            if (!string.IsNullOrEmpty(keyword))
+            {
+                products = products.Where(px => px.Name.ToUpper().Contains(keyword) ||
+                px.Price.ToString().Contains(keyword)).ToList();
+            }
+            return products;
         }
 
         public void AddData(Product product)
