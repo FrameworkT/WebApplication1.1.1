@@ -62,6 +62,21 @@ namespace WebApplication2.Migrations
                     b.ToTable("Components");
                 });
 
+            modelBuilder.Entity("WebApplication2.Models.ComponentProduct", b =>
+                {
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ComponentId")
+                        .HasColumnType("int");
+
+                    b.HasKey("ProductId", "ComponentId");
+
+                    b.HasIndex("ComponentId");
+
+                    b.ToTable("ComponentProducts");
+                });
+
             modelBuilder.Entity("WebApplication2.Models.Feature", b =>
                 {
                     b.Property<int>("Id")
@@ -147,6 +162,25 @@ namespace WebApplication2.Migrations
                     b.Navigation("Feature");
                 });
 
+            modelBuilder.Entity("WebApplication2.Models.ComponentProduct", b =>
+                {
+                    b.HasOne("WebApplication2.Models.Component", "Component")
+                        .WithMany()
+                        .HasForeignKey("ComponentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("WebApplication2.Models.Product", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Component");
+
+                    b.Navigation("Product");
+                });
+
             modelBuilder.Entity("WebApplication2.Models.Product", b =>
                 {
                     b.HasOne("WebApplication2.Models.Category", "Category")
@@ -155,7 +189,30 @@ namespace WebApplication2.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.OwnsOne("WebApplication2.Models.ProductExtend", "ProductExtend", b1 =>
+                        {
+                            b1.Property<int>("ProductId")
+                                .HasColumnType("int");
+
+                            b1.Property<string>("Color")
+                                .IsRequired()
+                                .HasColumnType("nvarchar(max)");
+
+                            b1.Property<double>("Weight")
+                                .HasColumnType("float");
+
+                            b1.HasKey("ProductId");
+
+                            b1.ToTable("Products");
+
+                            b1.WithOwner()
+                                .HasForeignKey("ProductId");
+                        });
+
                     b.Navigation("Category");
+
+                    b.Navigation("ProductExtend")
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("WebApplication2.Models.ProductDetails", b =>

@@ -32,6 +32,12 @@ namespace WebApplication1._1.Migrations
                     b.Property<int>("Amount")
                         .HasColumnType("int");
 
+                    b.Property<string>("Image")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ImageBase64")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -48,141 +54,181 @@ namespace WebApplication1._1.Migrations
                         {
                             Id = 1,
                             Amount = 6,
+                            Image = "",
+                            ImageBase64 = "",
                             Name = "MicroPhone1",
-                            Price = 16.0
+                            Price = 24.0
                         },
                         new
                         {
                             Id = 2,
                             Amount = 7,
+                            Image = "",
+                            ImageBase64 = "",
                             Name = "MicroPhone2",
-                            Price = 95.0
+                            Price = 39.0
                         },
                         new
                         {
                             Id = 3,
-                            Amount = 7,
+                            Amount = 3,
+                            Image = "",
+                            ImageBase64 = "",
                             Name = "MicroPhone3",
-                            Price = 62.0
+                            Price = 77.0
                         },
                         new
                         {
                             Id = 4,
-                            Amount = 5,
+                            Amount = 4,
+                            Image = "",
+                            ImageBase64 = "",
                             Name = "MicroPhone4",
-                            Price = 10.0
+                            Price = 64.0
                         },
                         new
                         {
                             Id = 5,
                             Amount = 4,
+                            Image = "",
+                            ImageBase64 = "",
                             Name = "MicroPhone5",
-                            Price = 70.0
+                            Price = 39.0
                         },
                         new
                         {
                             Id = 6,
-                            Amount = 6,
+                            Amount = 1,
+                            Image = "",
+                            ImageBase64 = "",
                             Name = "MicroPhone6",
-                            Price = 48.0
+                            Price = 37.0
                         },
                         new
                         {
                             Id = 7,
-                            Amount = 2,
+                            Amount = 5,
+                            Image = "",
+                            ImageBase64 = "",
                             Name = "MicroPhone7",
-                            Price = 58.0
+                            Price = 50.0
                         },
                         new
                         {
                             Id = 8,
-                            Amount = 5,
+                            Amount = 1,
+                            Image = "",
+                            ImageBase64 = "",
                             Name = "MicroPhone8",
-                            Price = 33.0
+                            Price = 91.0
                         },
                         new
                         {
                             Id = 9,
-                            Amount = 2,
+                            Amount = 5,
+                            Image = "",
+                            ImageBase64 = "",
                             Name = "MicroPhone9",
-                            Price = 88.0
+                            Price = 57.0
                         },
                         new
                         {
                             Id = 10,
-                            Amount = 3,
+                            Amount = 5,
+                            Image = "",
+                            ImageBase64 = "",
                             Name = "MicroPhone10",
-                            Price = 66.0
+                            Price = 49.0
                         },
                         new
                         {
                             Id = 11,
-                            Amount = 1,
+                            Amount = 9,
+                            Image = "",
+                            ImageBase64 = "",
                             Name = "MicroPhone11",
-                            Price = 45.0
+                            Price = 48.0
                         },
                         new
                         {
                             Id = 12,
-                            Amount = 4,
+                            Amount = 7,
+                            Image = "",
+                            ImageBase64 = "",
                             Name = "MicroPhone12",
-                            Price = 75.0
+                            Price = 84.0
                         },
                         new
                         {
                             Id = 13,
-                            Amount = 6,
+                            Amount = 9,
+                            Image = "",
+                            ImageBase64 = "",
                             Name = "MicroPhone13",
-                            Price = 97.0
+                            Price = 19.0
                         },
                         new
                         {
                             Id = 14,
-                            Amount = 4,
+                            Amount = 3,
+                            Image = "",
+                            ImageBase64 = "",
                             Name = "MicroPhone14",
-                            Price = 93.0
+                            Price = 67.0
                         },
                         new
                         {
                             Id = 15,
-                            Amount = 5,
+                            Amount = 7,
+                            Image = "",
+                            ImageBase64 = "",
                             Name = "MicroPhone15",
-                            Price = 17.0
+                            Price = 60.0
                         },
                         new
                         {
                             Id = 16,
-                            Amount = 9,
+                            Amount = 1,
+                            Image = "",
+                            ImageBase64 = "",
                             Name = "MicroPhone16",
-                            Price = 74.0
+                            Price = 97.0
                         },
                         new
                         {
                             Id = 17,
                             Amount = 3,
+                            Image = "",
+                            ImageBase64 = "",
                             Name = "MicroPhone17",
-                            Price = 88.0
+                            Price = 26.0
                         },
                         new
                         {
                             Id = 18,
-                            Amount = 1,
+                            Amount = 8,
+                            Image = "",
+                            ImageBase64 = "",
                             Name = "MicroPhone18",
-                            Price = 13.0
+                            Price = 51.0
                         },
                         new
                         {
                             Id = 19,
                             Amount = 4,
+                            Image = "",
+                            ImageBase64 = "",
                             Name = "MicroPhone19",
-                            Price = 80.0
+                            Price = 24.0
                         },
                         new
                         {
                             Id = 20,
-                            Amount = 6,
+                            Amount = 5,
+                            Image = "",
+                            ImageBase64 = "",
                             Name = "MicroPhone20",
-                            Price = 87.0
+                            Price = 48.0
                         });
                 });
 #pragma warning restore 612, 618

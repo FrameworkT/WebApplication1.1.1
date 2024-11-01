@@ -5,38 +5,44 @@ namespace WebApplication1._1.Controllers
 {
     public class NewProductController : Controller
     {
-        private readonly INewProductService ns;
+        private readonly INewProductService _productService;
 
-        public NewProductController(INewProductService ns)
+        public NewProductController(INewProductService productService)
         {
-            this.ns = ns;
+            _productService = productService;
         }
 
         public IActionResult Index(string? keyword)
         {
-            var products = ns.GetAll(keyword);
+            var products = _productService.GetAll(keyword);
             return View(products);
         }
 
-        public IActionResult UpCreate()
+        public IActionResult UpCreate(int? id)
         {
-            return View(new Product());
+            var product = id.HasValue ? _productService.SearchData(id.Value) : new Product();
+            return View(product);
         }
 
         [HttpPost]
-        public IActionResult UpCreate(Product product)
+        public IActionResult UpCreate(Product product, IFormFile file)
         {
-            if (product.Id == 0)
-                ns.AddData(product);
-            else
-                ns.UpdateData(product);
-            return RedirectToAction("Index");
+            if (ModelState.IsValid)
+            {
+                if (product.Id == 0)
+                    _productService.AddData(product, file);
+                else
+                    _productService.UpdateData(product, file);
+
+                return RedirectToAction("Index");
+            }
+            return View(product);
         }
+
         public IActionResult Delete(int id)
         {
-            ns.DeleteData(id);
+            _productService.DeleteData(id);
             return RedirectToAction("Index");
         }
-      
     }
 }

@@ -3,9 +3,9 @@
     public interface INewProductService
     {
         List<Product> GetAll(string keyword); //return ออกไปทั้งหมด
-        void AddData(Product product); //พารามิเตอร์
+        void AddData(Product product,IFormFile file); //พารามิเตอร์
         Product SearchData(int id);
-        void UpdateData(Product product);
+        void UpdateData(Product product,IFormFile file);
         void DeleteData(int id);
 
     }

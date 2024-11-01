@@ -15,6 +15,7 @@ builder.Services.AddTransient<ITestDI, TestDI>(); //เปลี่ยนได้ไม่เหมือนกัน
 
 builder.Services.AddDbContext<DataContext>(); //ลงทะเบียน
 builder.Services.AddScoped<INewProductService,NewProductService>(); //ลงทะเบียน
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

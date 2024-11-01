@@ -8,6 +8,7 @@ namespace WebApplication2.Models
         public string Name { get; set; }
         public double Price { get; set; }
         public int Amount { get; set; }
+        public ProductExtend ProductExtend { get; set; } //ต้องมี[Owned]
 
         public int CategoryId { get; set; } //กุญเเจ เป็นลักษณะเฉพาะ foren key คีย์นอก 1 to m
         public Category Category { get; set; } //คู่กัน 

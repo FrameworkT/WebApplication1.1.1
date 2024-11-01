@@ -15,6 +15,7 @@ namespace WebApplication1._1.Models
 
         [Required(ErrorMessage = "กรุณากรอกข้อมูล")]
         public int Amount { get; set; }
-       
+        public string? Image { get; set; } = string.Empty;
+        public string? ImageBase64 { get; set; } = string.Empty;
     }
 }
