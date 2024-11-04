@@ -13,7 +13,7 @@
         <form asp-action="UpCreate" enctype="multipart/form-data">
             <!-- เพิ่ม enctype เพื่อรองรับการอัปโหลดไฟล์ -->
             <input type="hidden" asp-for="Product.Id" />
-      
+
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
             <div class="form-group">
@@ -39,15 +39,22 @@
                 <select asp-for="Product.CategoryId" class="form-control" asp-items="Model.Categories"></select>
                 <span asp-validation-for="Product.CategoryId" class="text-danger"></span>
             </div>
+
             <div class="form-group">
                 <label asp-for="Product.Image" class="control-label"></label>
-                <input type="file" id="uploadBox" name="file" class="form-control"
-                       onchange="loadFile(event)" />
+                <input type="file" id="uploadBox" name="file" class="form-control" onchange="loadFiles(event)" />
             </div>
 
+            <!-- แสดงภาพที่มีอยู่ก่อนหน้านี้หากมี -->
+            <div class="form-group" id="currentImage">
+                @if (Model.Product.Image != null)
+                {
+                    <img src="@Model.Product.Image" alt="Current Image" width="200" style="margin-right: 10px;" />
+                    <p>Current Image</p>
+                }
+            </div>
 
             <div class="form-group" id="imagePreview"></div>
-
 
             <div class="form-group">
                 @if (Model.Product.Id == 0)

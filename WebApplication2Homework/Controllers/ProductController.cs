@@ -53,7 +53,7 @@ namespace WebApplication2Homework._1.Controllers
         {
             if (product.Id > 0)
             {
-               
+                ns.UpdateData(product, file); // เรียกใช้ UpdateData เมื่อมีการอัปเดตผลิตภัณฑ์
             }
             else
             {
