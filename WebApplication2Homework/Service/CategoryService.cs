@@ -16,34 +16,16 @@ namespace WebApplication2Homework.Service
         {
             keyword = keyword?.ToUpper();
 
-            // เริ่มต้น query สำหรับผลิตภัณฑ์พร้อมรวมข้อมูลหมวดหมู่
-            IEnumerable<Category> CategoryQuery = db.categories;
+            var categorys = db.categories.OrderByDescending(px => px.Id).ToList();
 
             if (!string.IsNullOrEmpty(keyword))
             {
-                // ตรวจสอบว่าคำค้นหาเป็นตัวเลข
-                if (double.TryParse(keyword, out double price))
-                {
-                    CategoryQuery = CategoryQuery.Where(px => px.Name.ToUpper().Contains(keyword));
-                }
-                else
-                {
-                    CategoryQuery = CategoryQuery.Where(px => px.Name.ToUpper().Contains(keyword));
-                }
-
+                categorys = categorys.Where(px => px.Name.ToUpper().Contains(keyword))
+                .OrderByDescending(px => px.Id).ToList();
             }
 
-            // จัดเรียงข้อมูลตาม Id ในลำดับจากมากไปน้อย
-            return CategoryQuery.OrderByDescending(px => px.Id).ToList();
+            return categorys;
         }
-
-        //// ฟังก์ชันสำหรับจัดกลุ่มผลิตภัณฑ์ตามหมวดหมู่
-        //public IEnumerable<IGrouping<Category, Product>> GetProductsGroupedByCategory()
-        //{
-        //    return db.Products.Include(p => p.Category)
-        //        .GroupBy(p => p.Category)
-        //        .ToList();
-        //}
 
         public void AddData(Category category)
         {
@@ -51,38 +33,26 @@ namespace WebApplication2Homework.Service
             db.SaveChanges();
         }
 
-        public void AddCategory(Category category)
+        public Category SearchData(int id)
         {
-            db.categories.Add(category);
-            db.SaveChanges();
+            return db.categories.Find(id);
         }
 
-        public void Update(Category category)
+        public void UpdateData(Category category)
         {
             db.categories.Update(category);
             db.SaveChanges();
         }
 
-        public Category SerchData(int id)
-        {
-            var category = db.categories.Find(id);
-            return category;
-        }
-
         public void DeleteData(int id)
         {
-            var category = SerchData(id);
-            if (category is null) return;
-            db.categories.Remove(category);
-            db.SaveChanges();
-        }
+            var category = SearchData(id);
 
-        public IEnumerable<Category> GetCategories()
-        {
-            return db.categories.ToList(); // เปลี่ยนให้เหมาะสมกับฐานข้อมูลของคุณ
+            if (category != null)
+            {
+                db.categories.Remove(category);
+                db.SaveChanges();
+            }
         }
-
-        
     }
 }
-

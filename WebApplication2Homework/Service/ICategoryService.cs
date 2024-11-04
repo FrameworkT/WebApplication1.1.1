@@ -4,13 +4,8 @@
     {
         List<Category> GetAll(string keyword);
         void AddData(Category category);
-        void AddCategory(Category category);
-
-        void Update(Category category);
-
-        Category SerchData(int id);
-
+        Category SearchData(int id);
+        void UpdateData(Category category);
         void DeleteData(int id);
-
     }
 }

@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
-using WebApplication2Homework.Models;
+
 
 namespace WebApplication2Homework.Controllers
 {

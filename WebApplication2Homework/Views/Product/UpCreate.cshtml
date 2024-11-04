@@ -1,27 +1,32 @@
-﻿@model WebApplication2Homework.Models.ProductModelView
+﻿@model WebApplication2Homework.Models.ProductViewModel
 
 @{
-    ViewData["Title"] = "UpCreate";
+    ViewData["Title"] = Model.Product.Id == 0 ? "Create Product" : "Edit Product";
 }
 
-<h1>UpCreate</h1>
+<h1>@ViewData["Title"]</h1>
+
 
 <h4>Product</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
         <form asp-action="UpCreate">
+            <input type="hidden" asp-for="Product.Id" /> <!-- เพิ่มบรรทัดนี้เพื่อส่ง Id กลับไปยัง Controller -->
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
             <div class="form-group">
                 <label asp-for="Product.Name" class="control-label"></label>
                 <input asp-for="Product.Name" class="form-control" />
                 <span asp-validation-for="Product.Name" class="text-danger"></span>
             </div>
+
             <div class="form-group">
                 <label asp-for="Product.Price" class="control-label"></label>
                 <input asp-for="Product.Price" class="form-control" />
                 <span asp-validation-for="Product.Price" class="text-danger"></span>
             </div>
+
             <div class="form-group">
                 <label asp-for="Product.Amount" class="control-label"></label>
                 <input asp-for="Product.Amount" class="form-control" />
@@ -30,23 +35,28 @@
 
             <div class="form-group">
                 <label asp-for="Product.CategoryId" class="control-label"></label>
-                <select asp-for="Product.CategoryId" class="form-control" asp-items="@(new SelectList(Model.Categories, "Id", "Name"))">
-                    <option value="">Select Category</option>
-                </select>
+                <select asp-for="Product.CategoryId" class="form-control" asp-items="Model.Categories"></select>
                 <span asp-validation-for="Product.CategoryId" class="text-danger"></span>
             </div>
 
+            <div class="form-group">
+                <label asp-for="Image" class="control-label"></label>
+                <input type="file" name="file" accept="image/*" id="file" onchange="loadFile(event)" />
+                <span asp-validation-for="Image" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <img src="@Model.Image" id="output" width="200" />
+            </div>
 
             <div class="form-group">
                 @if (Model.Product.Id == 0)
                 {
-                    <input type="submit" value="Create" class="btn btn-success" />
-                    <a class="btn btn-danger" asp-action="Index">Back</a>
+                    <input type="submit" value="Create" class="btn btn-primary" />
                 }
                 else
                 {
-                    <input type="submit" value="Update" class="btn btn-success" />
-                    <a class="btn btn-danger" asp-action="Index">Back</a>
+                    <input type="submit" value="Update" class="btn btn-dark" />
                 }
             </div>
         </form>
@@ -61,4 +71,14 @@
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
+    <script>
+        // ฟังก์ชันสำหรับแสดงภาพที่ถูกเลือก
+        var loadFile = function (event) {
+            var output = document.getElementById('output');
+            output.src = URL.createObjectURL(event.target.files[0]);
+            output.onload = function () {
+                URL.revokeObjectURL(output.src) // free memory
+            }
+        };
+    </script>
 }

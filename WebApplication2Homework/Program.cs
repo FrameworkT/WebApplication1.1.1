@@ -1,5 +1,4 @@
 global using WebApplication2Homework.Models;
-using HomeMVC.Service;
 using WebApplication2Homework.Data;
 using WebApplication2Homework.Service;
 
@@ -7,14 +6,13 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
-builder.Services.AddDbContext<Datacontext>(); //ลงทะเบียน
-builder.Services.AddScoped<IProductServices, ProductServices>();
+builder.Services.AddDbContext<Datacontext>();
+builder.Services.AddScoped<IProductService, ProductService>();
 builder.Services.AddScoped<ICategoryService, CategoryService>();
 
-//
 var app = builder.Build();
 
-// Configure the HTTP request pipeline. 
+// Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");

@@ -52,6 +52,12 @@ namespace WebApplication2Homework.Migrations
                     b.Property<int>("CategoryId")
                         .HasColumnType("int");
 
+                    b.Property<string>("Image")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ImageBase64")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -68,13 +74,13 @@ namespace WebApplication2Homework.Migrations
 
             modelBuilder.Entity("WebApplication2Homework.Models.Product", b =>
                 {
-                    b.HasOne("WebApplication2Homework.Models.Category", "Category")
+                    b.HasOne("WebApplication2Homework.Models.Category", "category")
                         .WithMany()
                         .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Category");
+                    b.Navigation("category");
                 });
 #pragma warning restore 612, 618
         }
