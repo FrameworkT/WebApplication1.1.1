@@ -14,7 +14,6 @@ namespace WebApplication2Homework.Models
         public double Price { get; set; }
         public int Amount { get; set; }
         public string? Image { get; set; } = string.Empty;
-        public string? ImageBase64 { get; set; } = string.Empty;
         public int CategoryId { get; set; }// ชื่อไฟล์ สร้างforeing key
         public Category category { get; set; }//ความสำพันธ์ 1:m
 

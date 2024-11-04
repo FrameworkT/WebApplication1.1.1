@@ -1,16 +1,16 @@
-﻿using Microsoft.AspNetCore.Hosting;
+﻿
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using WebApplication2Homework.Data;
-
 public class ProductService : IProductService
 {
     private readonly Datacontext db;
-    private readonly IWebHostEnvironment _webHostEnvironment;
+    private readonly IWebHostEnvironment webEnv;
 
-    public ProductService(Datacontext db, IWebHostEnvironment webHostEnvironment)
+    public ProductService(Datacontext db, IWebHostEnvironment webEnv)
     {
         this.db = db;
-        _webHostEnvironment = webHostEnvironment;
+        this.webEnv = webEnv;
     }
 
     public List<Product> GetAll(string keyword)
@@ -19,35 +19,48 @@ public class ProductService : IProductService
 
         // ใช้ Include เพื่อโหลด Category ที่เกี่ยวข้อง
         var query = db.Products.Include(p => p.category).AsQueryable();
-        //var products = db.Products.OrderByDescending(px => px.Id).ToList();
+
         // การค้นหาผลิตภัณฑ์ตาม keyword
         if (!string.IsNullOrEmpty(keyword))
         {
-            query = query.Where(px => px.Name.ToUpper().Contains(keyword)
-                                   );
+            query = query.Where(px => px.Name.ToUpper().Contains(keyword));
         }
 
         // เรียงลำดับและแปลงเป็น List
         return query.OrderByDescending(px => px.Id).ToList();
     }
 
-
-    public void AddData(Product product, IFormFile file)
+    public  void AddData(Product product, IFormFile file)
     {
-        db.Products.Add(product);
-        db.SaveChanges();
+        string wwwRootPath = webEnv.WebRootPath;
+        if (file != null)
+        {
+            string fileName = Guid.NewGuid().ToString();
+            var extension = Path.GetExtension(file.FileName);
+            var uploads = Path.Combine(wwwRootPath, "images");
+            if (!Directory.Exists(uploads)) Directory.CreateDirectory(uploads);
+            //แบบที่ 1 บันทึกรุปภาพใหม่(เป็นไฟล์ภายนอก database)
+            using (var fileStreams = new FileStream(Path.Combine(uploads,fileName + extension), FileMode.Create))
+            {
+                file.CopyTo(fileStreams);
+            }
+            product.Image = @"\images\" + fileName + extension;
+        }
+         db.Products.Add(product);
+         db.SaveChanges();
     }
+
 
     public Product SearchData(int id)
     {
-        return db.Products.Find(id);
+        return db.Products.Include(p => p.category).FirstOrDefault(p => p.Id == id);
     }
 
-    public void UpdateData(Product product, IFormFile file)
-    {
-        db.Products.Update(product);
-        db.SaveChanges();
-    }
+    //public void UpdateData(Product product, IFormFile file)
+    //{
+    //    db.Products.Update(product, file);
+    //    db.SaveChanges();
+    //}
 
     public void DeleteData(int id)
     {
@@ -59,26 +72,8 @@ public class ProductService : IProductService
             db.SaveChanges();
         }
     }
-    private void SaveFile(Product product, IFormFile file)
-    {
-        var uploadsFolder = Path.Combine(_webHostEnvironment.WebRootPath, "images");
-        Directory.CreateDirectory(uploadsFolder);
 
-        var fileName = Guid.NewGuid() + Path.GetExtension(file.FileName);
-        var filePath = Path.Combine(uploadsFolder, fileName);
-
-        using (var fileStream = new FileStream(filePath, FileMode.Create))
-        {
-            file.CopyTo(fileStream);
-        }
-
-        product.Image = "/images/" + fileName;
-
-        using (var memoryStream = new MemoryStream())
-        {
-            file.CopyTo(memoryStream);
-            product.ImageBase64 = $"data:image/png;base64,{Convert.ToBase64String(memoryStream.ToArray())}";
-        }
-    }
-}
+    public IEnumerable<Category> GetCategories() => db.categories.ToList();
     
+    
+}

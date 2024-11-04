@@ -6,13 +6,14 @@
 
 <h1>@ViewData["Title"]</h1>
 
-
 <h4>Product</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="UpCreate">
-            <input type="hidden" asp-for="Product.Id" /> <!-- เพิ่มบรรทัดนี้เพื่อส่ง Id กลับไปยัง Controller -->
+        <form asp-action="UpCreate" enctype="multipart/form-data">
+            <!-- เพิ่ม enctype เพื่อรองรับการอัปโหลดไฟล์ -->
+            <input type="hidden" asp-for="Product.Id" />
+      
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
             <div class="form-group">
@@ -38,16 +39,15 @@
                 <select asp-for="Product.CategoryId" class="form-control" asp-items="Model.Categories"></select>
                 <span asp-validation-for="Product.CategoryId" class="text-danger"></span>
             </div>
-
             <div class="form-group">
-                <label asp-for="Image" class="control-label"></label>
-                <input type="file" name="file" accept="image/*" id="file" onchange="loadFile(event)" />
-                <span asp-validation-for="Image" class="text-danger"></span>
+                <label asp-for="Product.Image" class="control-label"></label>
+                <input type="file" id="uploadBox" name="file" class="form-control"
+                       onchange="loadFile(event)" />
             </div>
 
-            <div class="form-group">
-                <img src="@Model.Image" id="output" width="200" />
-            </div>
+
+            <div class="form-group" id="imagePreview"></div>
+
 
             <div class="form-group">
                 @if (Model.Product.Id == 0)
@@ -73,12 +73,21 @@
     }
     <script>
         // ฟังก์ชันสำหรับแสดงภาพที่ถูกเลือก
-        var loadFile = function (event) {
-            var output = document.getElementById('output');
-            output.src = URL.createObjectURL(event.target.files[0]);
-            output.onload = function () {
-                URL.revokeObjectURL(output.src) // free memory
-            }
+        var loadFiles = function (event) {
+            var imagePreview = document.getElementById('imagePreview');
+            imagePreview.innerHTML = ''; // เคลียร์ภาพเก่า
+
+            Array.from(event.target.files).forEach(function (file) {
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    var img = document.createElement('img');
+                    img.src = e.target.result;
+                    img.width = 200; // กำหนดขนาดของภาพ
+                    img.style.marginRight = '10px'; // เพิ่มระยะห่างระหว่างภาพ
+                    imagePreview.appendChild(img);
+                }
+                reader.readAsDataURL(file); // อ่านไฟล์เป็น Data URL
+            });
         };
     </script>
 }

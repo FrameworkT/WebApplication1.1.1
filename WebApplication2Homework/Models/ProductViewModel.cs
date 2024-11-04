@@ -6,6 +6,6 @@ namespace WebApplication2Homework.Models
     {
         public Product Product { get; set; }
         public List<SelectListItem> Categories { get; set; }
-        public string Image => Product?.Image; // Property เพื่อใช้แสดงรูปภาพในหน้า View
+        public List<string> Images { get; set; } // Property เพื่อใช้แสดงรูปภาพในหน้า View
     }
 }

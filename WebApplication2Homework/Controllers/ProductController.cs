@@ -32,7 +32,6 @@ namespace WebApplication2Homework._1.Controllers
             return View(groupedProducts);
         }
 
-        [HttpGet]
         public IActionResult UpCreate(int? id)
         {
             var model = new ProductViewModel
@@ -42,48 +41,31 @@ namespace WebApplication2Homework._1.Controllers
                     {
                         Value = c.Id.ToString(),
                         Text = c.Name
-                    }).ToList()
+                    }).ToList(),
+                Product = id.HasValue ? ns.SearchData(id.Value) : new Product()
             };
 
-            if (id.HasValue)
-            {
-                var product = ns.SearchData(id.Value);
-                if (product != null)
-                {
-                    model.Product = product;
-                }
-                else
-                {
-                    return RedirectToAction("Index");
-                }
-            }
-            else
-            {
-                // ถ้า id เป็น null ให้สร้าง Product ใหม่
-                model.Product = new Product();
-            }
-
-            return View(model);
+            return model.Product != null ? View(model) : RedirectToAction("Index");
         }
 
         [HttpPost]
         public IActionResult UpCreate(Product product, IFormFile file)
         {
-            if (product.Id == 0)
+            if (product.Id > 0)
             {
-                ns.AddData(product, file);
+               
             }
             else
             {
-                ns.UpdateData(product, file);
+                ns.AddData(product, file);
             }
             return RedirectToAction("Index");
         }
+
         public IActionResult Delete(int id)
         {
             ns.DeleteData(id);
             return RedirectToAction("Index");
         }
-
     }
 }
